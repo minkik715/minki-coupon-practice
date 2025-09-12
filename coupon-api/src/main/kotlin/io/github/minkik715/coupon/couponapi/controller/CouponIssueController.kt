@@ -1,0 +1,34 @@
+package io.github.minkik715.coupon.couponapi.controller
+
+import io.github.minkik715.coupon.couponapi.controller.dto.CouponIssueRequestDto
+import io.github.minkik715.coupon.couponapi.controller.dto.CouponIssueResponseDto
+import io.github.minkik715.coupon.couponapi.service.CouponIssueRequestService
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+class CouponIssueController(
+    private val couponIssueRequestService: CouponIssueRequestService
+) {
+
+    @PostMapping("/v1/issue")
+    fun issueV1(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.issueRequestV1(requestDto)
+        return CouponIssueResponseDto(true)
+    }
+
+    @PostMapping("/v2/issue")
+    //Named Lock
+    fun issueV2(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.issueRequestV2(requestDto)
+        return CouponIssueResponseDto(true)
+    }
+
+    @PostMapping("/v3/issue")
+    //레코드 락
+    fun issueV3(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.issueRequestV3(requestDto)
+        return CouponIssueResponseDto(true)
+    }
+}
