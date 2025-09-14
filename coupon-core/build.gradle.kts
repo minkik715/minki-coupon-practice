@@ -17,6 +17,7 @@ dependencies {
     implementation("org.redisson:redisson-spring-boot-starter:3.16.4")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("com.github.ben-manes.caffeine:caffeine")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")

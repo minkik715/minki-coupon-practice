@@ -31,4 +31,12 @@ class CouponIssueController(
         couponIssueRequestService.issueRequestV3(requestDto)
         return CouponIssueResponseDto(true)
     }
+
+
+    @PostMapping("/v1/issue-async")
+    //레코드 락
+    fun asyncIssueV1(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.asyncIssueRequestV1(requestDto)
+        return CouponIssueResponseDto(true)
+    }
 }

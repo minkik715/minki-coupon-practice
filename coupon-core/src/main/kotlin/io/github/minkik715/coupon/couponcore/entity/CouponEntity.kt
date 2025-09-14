@@ -43,6 +43,9 @@ class CouponEntity(
         fun getId() = id
     fun getIssuedQuantity() = issuedQuantity
 
+    fun getTotalQuantity() = totalQuantity
+    fun getDateIssueStart() = dateIssueStart
+    fun getDateIssueEnd() = dateIssueEnd
 
     fun availableIssueQuantity(): Boolean{
         return totalQuantity?.let {
