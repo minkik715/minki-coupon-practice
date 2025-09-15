@@ -7,7 +7,7 @@ import io.github.minkik715.coupon.couponcore.entity.CouponType
 import io.github.minkik715.coupon.couponcore.exception.CouponIssueException
 import io.github.minkik715.coupon.couponcore.exception.ErrorCode
 import io.github.minkik715.coupon.couponcore.repository.mysql.CouponJpaRepository
-import io.github.minkik715.coupon.couponcore.repository.redis.CouponIssueConfirmDTO
+import io.github.minkik715.coupon.couponcore.repository.redis.dto.CouponIssueConfirmDTO
 import io.github.minkik715.coupon.couponcore.util.CouponRedisHelper
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach

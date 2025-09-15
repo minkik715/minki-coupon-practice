@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 class AsyncCouponIssueServiceV1(
     private val couponIssueRedisService: CouponIssueRedisService,
     private val couponIssueService: CouponIssueService,
+    private val couponCacheService: CouponCacheService,
     private val distributeLockExecutor: DistributeLockExecutor
 ) {
 
@@ -20,24 +21,12 @@ class AsyncCouponIssueServiceV1(
 
 
     fun issueV2(couponId: Long, userId: Long){
-        val coupon = couponIssueService.findCoupon(couponId)
-        val totalQuantity = coupon.getTotalQuantity()
+        val coupon = couponCacheService.getCouponCache(couponId)
 
-        if(!coupon.availableIssueDate()){
-            throw CouponIssueException("발급 가능한 일자가 아닙니다, request: ${LocalDateTime.now()}, issuedStart: ${coupon.getDateIssueStart()}, issuedEnd: ${coupon.getDateIssueEnd()}", ErrorCode.INVALID_COUPON_ISSUE_DATE)
-        }
 
         distributeLockExecutor.execute("lock_coupon_issue_${couponId}",
             {
-                if(!couponIssueRedisService.availableTotalIssueQuantity(couponId, totalQuantity)){
-                    throw CouponIssueException("발급 가능한 수량을 초과했습니다. total: $totalQuantity, couponId: $couponId", ErrorCode.INVALID_COUPON_ISSUE_QUANTITY)
-                }
-
-                if(!couponIssueRedisService.availableUserIssueQuantity(couponId, userId)){
-                    throw CouponIssueException("쿠폰이 이미 발급되었습니다. userId: $userId, couponId: $couponId", ErrorCode.COUPON_ALREADY_ISSUED)
-                }
-
-                couponIssueRedisService.couponIssue(couponId, userId)
+                couponIssueRedisService.couponIssue(coupon, userId)
             },
             3000,
             3000

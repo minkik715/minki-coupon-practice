@@ -19,14 +19,14 @@ class CouponIssueController(
     }
 
     @PostMapping("/v2/issue")
-    //Named Lock
+    //레디스 분산 Lock
     fun issueV2(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
         couponIssueRequestService.issueRequestV2(requestDto)
         return CouponIssueResponseDto(true)
     }
 
     @PostMapping("/v3/issue")
-    //레코드 락
+    //MYSQL 레코드 락
     fun issueV3(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
         couponIssueRequestService.issueRequestV3(requestDto)
         return CouponIssueResponseDto(true)
@@ -34,9 +34,16 @@ class CouponIssueController(
 
 
     @PostMapping("/v1/issue-async")
-    //레코드 락
+    //레디스 레코드 락
     fun asyncIssueV1(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
         couponIssueRequestService.asyncIssueRequestV1(requestDto)
+        return CouponIssueResponseDto(true)
+    }
+
+    @PostMapping("/v2/issue-async")
+    //레디스 레코드 락
+    fun asyncIssueV2(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.asyncIssueRequestV2(requestDto)
         return CouponIssueResponseDto(true)
     }
 }

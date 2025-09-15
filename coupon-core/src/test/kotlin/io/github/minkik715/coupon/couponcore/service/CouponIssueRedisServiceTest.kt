@@ -31,7 +31,7 @@ class CouponIssueRedisServiceTest : TestConfig(){
         val couponId = 1L;
 
         val available =
-            couponIssueRedisService.availableTotalIssueQuantity(couponId, totalIssueQuantity)
+            couponIssueRedisService.couponIssue(couponId, totalIssueQuantity)
 
         Assertions.assertTrue(available)
 
