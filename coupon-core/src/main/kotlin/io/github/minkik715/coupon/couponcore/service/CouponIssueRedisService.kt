@@ -29,6 +29,12 @@ class CouponIssueRedisService(
         )
     }
 
+    fun couponIssueV2(coupon: CouponRedisEntity, userId: Long){
+        val couponId = coupon.id
+        coupon.checkIssuableCoupon()
+        redisRepository.issueRequest(couponId, userId, coupon.totalQuantity)
+    }
+
     fun checkCouponIssueQuantity(couponRedisEntity: CouponRedisEntity, userId: Long){
         if(!availableTotalIssueQuantity(couponRedisEntity.id, couponRedisEntity.totalQuantity)){
             throw CouponIssueException("발급 가능한 수량을 초과했습니다. total: ${couponRedisEntity.totalQuantity}, couponId: ${couponRedisEntity.id}", ErrorCode.INVALID_COUPON_ISSUE_QUANTITY)

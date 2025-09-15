@@ -27,7 +27,7 @@ class CouponRedisEntity(
     constructor(couponEntity: CouponEntity): this(
         id = couponEntity.getId(),
         type = couponEntity.getType(),
-        totalQuantity = couponEntity.getTotalQuantity(),
+        totalQuantity = couponEntity.getTotalQuantity()?: Integer.MAX_VALUE,
         dateIssueStart = couponEntity.getDateIssueStart(),
         dateIssueEnd = couponEntity.getDateIssueEnd()
     ){

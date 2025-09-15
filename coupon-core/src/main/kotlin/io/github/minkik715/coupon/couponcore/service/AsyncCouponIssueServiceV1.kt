@@ -31,10 +31,11 @@ class AsyncCouponIssueServiceV1(
             3000,
             3000
         )
+    }
 
-
-
-        // 쿠폰 큐에 적재 (큐에 적재하는 로직 필요)
+    fun issueV3(couponId: Long, userId: Long){
+        val coupon = couponCacheService.getCouponCache(couponId)
+        couponIssueRedisService.couponIssueV2(coupon, userId)
     }
 
 
