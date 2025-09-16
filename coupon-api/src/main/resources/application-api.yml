@@ -1,26 +1,17 @@
 spring:
   application:
     name: coupon-api
-  datasource:
-    hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/coupon?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      maximum-pool-size: 10
-      max-lifetime: 300000
-      connection-timeout: 3000
-      username: abcd
-      password: 1234
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  data:
-    redis:
-      host: localhost
-      port: 6380
 server:
   port: 8080
-
+  tomcat:
+    mbeanregistry:
+      enabled: true
+management:
+  metrics:
+    tags:
+      application:
+        ${spring.application.name}
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
