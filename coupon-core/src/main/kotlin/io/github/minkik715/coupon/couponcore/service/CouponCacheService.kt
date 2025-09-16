@@ -18,15 +18,17 @@ class CouponCacheService(
         return CouponRedisEntity(coupon)
     }
 
+    @CachePut(cacheNames =  ["cache.coupon"], cacheManager = "redisCacheManager" )
+    fun putCouponCache(couponId: Long): CouponRedisEntity{
+        return getCouponCache(couponId)
+    }
+
     @Cacheable(cacheNames =  ["cache.coupon"], cacheManager = "localCacheManager" )
     fun getCouponLocalCache(couponId: Long): CouponRedisEntity{
         return proxy().getCouponCache(couponId)
     }
 
-    @CachePut(cacheNames =  ["cache.coupon"], cacheManager = "redisCacheManager" )
-    fun putCouponCache(couponId: Long): CouponRedisEntity{
-        return getCouponCache(couponId)
-    }
+
 
     @CachePut(cacheNames =  ["cache.coupon"], cacheManager = "localCacheManager" )
     fun putCouponLocalCache(couponId: Long): CouponRedisEntity{

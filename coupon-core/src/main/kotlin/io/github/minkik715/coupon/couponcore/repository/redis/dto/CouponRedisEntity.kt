@@ -15,6 +15,7 @@ class CouponRedisEntity(
     val type: CouponType,
     val totalQuantity: Int,
     val available: Boolean,
+    val updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
