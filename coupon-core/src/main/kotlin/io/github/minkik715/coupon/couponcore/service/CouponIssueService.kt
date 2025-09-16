@@ -19,6 +19,7 @@ class CouponIssueService(
     @Transactional
     fun issue(couponId: Long, userId: Long){
         val coupon = findCoupon(couponId);
+        println(coupon)
         coupon.issue()
         saveCouponIssue(couponId, userId)
     }

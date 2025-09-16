@@ -39,8 +39,12 @@ class RedisRepository(
         return redisTemplate.opsForList().rightPush(key, value)!! > 0
     }
 
-    fun lPop(key: String): Boolean {
-        return redisTemplate.opsForList().rightPop(key) != null
+    fun rPop(key: String): String? {
+        return redisTemplate.opsForList().rightPop(key)
+    }
+
+    fun lSize(key: String): Long {
+        return redisTemplate.opsForList().size(key)!!
     }
 
     fun doTransaction(runnable: Runnable) {

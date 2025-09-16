@@ -5,4 +5,6 @@ import io.github.minkik715.coupon.couponcore.entity.CouponIssueEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CouponIssueJpaRepository: JpaRepository<CouponIssueEntity, Long> {
+
+    fun findCouponIssueEntityByCouponIdAndUserId(couponId: Long, userId: Long): CouponIssueEntity?
 }
