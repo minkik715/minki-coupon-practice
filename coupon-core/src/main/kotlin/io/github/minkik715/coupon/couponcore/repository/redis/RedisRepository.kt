@@ -88,7 +88,6 @@ class RedisRepository(
             
             return '3'
         """
-
         return RedisScript.of(script, String::class.java)
     }
 }

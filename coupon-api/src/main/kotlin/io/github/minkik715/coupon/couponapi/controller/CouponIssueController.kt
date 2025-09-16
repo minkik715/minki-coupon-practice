@@ -54,4 +54,12 @@ class CouponIssueController(
         couponIssueRequestService.asyncIssueRequestV3(requestDto)
         return CouponIssueResponseDto(true)
     }
+
+
+    @PostMapping("/v4/issue-async")
+    //redis lua script 사용 & 로컬 캐쉬 사용
+    fun asyncIssueV4(@RequestBody requestDto: CouponIssueRequestDto): CouponIssueResponseDto {
+        couponIssueRequestService.asyncIssueRequestV4(requestDto)
+        return CouponIssueResponseDto(true)
+    }
 }

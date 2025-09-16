@@ -48,6 +48,11 @@ class CouponEntity(
     fun getDateIssueEnd() = dateIssueEnd!!
     fun getType() = type!!
 
+
+    fun couponCompletable(): Boolean{
+        return !availableIssueDate() || !availableIssueQuantity()
+    }
+
     fun availableIssueQuantity(): Boolean{
         return totalQuantity?.let {
             it > issuedQuantity
@@ -65,7 +70,6 @@ class CouponEntity(
         }
         if(!availableIssueQuantity()){
             throw CouponIssueException("발급 가능한 수량을 초과했습니다. total: $totalQuantity, issued: $issuedQuantity", ErrorCode.INVALID_COUPON_ISSUE_QUANTITY)
-
         }
         issuedQuantity += 1
     }

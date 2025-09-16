@@ -31,6 +31,11 @@ class CouponIssueRedisService(
 
     fun couponIssueV2(coupon: CouponRedisEntity, userId: Long){
         val couponId = coupon.id
+        redisRepository.issueRequest(couponId, userId, coupon.totalQuantity)
+    }
+
+    fun couponIssueV3(coupon: CouponRedisEntity, userId: Long){
+        val couponId = coupon.id
         coupon.checkIssuableCoupon()
         redisRepository.issueRequest(couponId, userId, coupon.totalQuantity)
     }

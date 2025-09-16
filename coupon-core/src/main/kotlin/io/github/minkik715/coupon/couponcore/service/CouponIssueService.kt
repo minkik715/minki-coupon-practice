@@ -2,11 +2,13 @@ package io.github.minkik715.coupon.couponcore.service
 
 import io.github.minkik715.coupon.couponcore.entity.CouponEntity
 import io.github.minkik715.coupon.couponcore.entity.CouponIssueEntity
+import io.github.minkik715.coupon.couponcore.entity.event.CouponIssueCompleteEvent
 import io.github.minkik715.coupon.couponcore.exception.CouponIssueException
 import io.github.minkik715.coupon.couponcore.exception.ErrorCode
 import io.github.minkik715.coupon.couponcore.repository.mysql.CouponIssueJpaRepository
 import io.github.minkik715.coupon.couponcore.repository.mysql.CouponIssueRepository
 import io.github.minkik715.coupon.couponcore.repository.mysql.CouponJpaRepository
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,13 +17,20 @@ class CouponIssueService(
     private val couponJpaRepository: CouponJpaRepository,
     private val couponIssueJpaRepository: CouponIssueJpaRepository,
     private val couponIssueRepository: CouponIssueRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
     @Transactional
     fun issue(couponId: Long, userId: Long){
         val coupon = findCoupon(couponId);
-        println(coupon)
         coupon.issue()
         saveCouponIssue(couponId, userId)
+        publishIssueCouponEvent(coupon)
+    }
+
+    private fun publishIssueCouponEvent(coupon: CouponEntity) {
+        if(coupon.couponCompletable()){
+           applicationEventPublisher.publishEvent(CouponIssueCompleteEvent(coupon.getId()))
+        }
     }
 
     @Transactional

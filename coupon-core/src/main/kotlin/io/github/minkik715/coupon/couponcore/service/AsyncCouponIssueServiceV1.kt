@@ -21,7 +21,7 @@ class AsyncCouponIssueServiceV1(
 
 
     fun issueV2(couponId: Long, userId: Long){
-        val coupon = couponCacheService.getCouponCache(couponId)
+        val coupon = couponCacheService.getCouponLocalCache(couponId)
 
 
         distributeLockExecutor.execute("lock_coupon_issue_${couponId}",
@@ -34,8 +34,13 @@ class AsyncCouponIssueServiceV1(
     }
 
     fun issueV3(couponId: Long, userId: Long){
-        val coupon = couponCacheService.getCouponCache(couponId)
+        val coupon = couponCacheService.getCouponLocalCache(couponId)
         couponIssueRedisService.couponIssueV2(coupon, userId)
+    }
+
+    fun issueV4(couponId: Long, userId: Long){
+        val coupon = couponCacheService.getCouponLocalCache(couponId)
+        couponIssueRedisService.couponIssueV3(coupon, userId)
     }
 
 

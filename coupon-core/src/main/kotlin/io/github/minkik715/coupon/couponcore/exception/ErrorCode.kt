@@ -6,5 +6,6 @@ enum class ErrorCode(var msg: String) {
     COUPON_NOT_EXIST("존재하지 않는 쿠폰입니다."),
     COUPON_ALREADY_ISSUED("이미 발급된 쿠폰입니다."),
     COUPON_ISSUE_FAIL("쿠폰 발급에 실패했습니다."),
+    COUPON_ISSUE_COMPLETE("쿠폰 발급에 실패했습니다."),
 
 }

@@ -58,4 +58,10 @@ class CouponIssueRequestService(
         log.info("쿠폰 발급 완료, couponId: ${requestDto.couponId}, userId: ${requestDto.userId}")
     }
 
+    fun asyncIssueRequestV4(requestDto: CouponIssueRequestDto){
+        asyncCouponIssueServiceV1.issueV4(requestDto.couponId, requestDto.userId)
+
+        log.info("쿠폰 발급 완료, couponId: ${requestDto.couponId}, userId: ${requestDto.userId}")
+    }
+
 }

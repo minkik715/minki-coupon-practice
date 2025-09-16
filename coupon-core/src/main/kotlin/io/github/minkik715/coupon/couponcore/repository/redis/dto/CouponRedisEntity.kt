@@ -14,6 +14,7 @@ class CouponRedisEntity(
     val id: Long,
     val type: CouponType,
     val totalQuantity: Int,
+    val available: Boolean,
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
@@ -27,6 +28,7 @@ class CouponRedisEntity(
     constructor(couponEntity: CouponEntity): this(
         id = couponEntity.getId(),
         type = couponEntity.getType(),
+        available = !couponEntity.couponCompletable(),
         totalQuantity = couponEntity.getTotalQuantity()?: Integer.MAX_VALUE,
         dateIssueStart = couponEntity.getDateIssueStart(),
         dateIssueEnd = couponEntity.getDateIssueEnd()
@@ -40,7 +42,14 @@ class CouponRedisEntity(
     }
 
     fun checkIssuableCoupon(){
-        if(!availableIssueDate()){
+        if(!available) {
+            throw CouponIssueException(
+                "마감된 쿠폰입니다. available: $available, couponId: $id",
+                ErrorCode.COUPON_ISSUE_COMPLETE
+            )
+        }
+
+            if(!availableIssueDate()){
             throw CouponIssueException("발급 가능한 일자가 아닙니다, request: ${LocalDateTime.now()}, issuedStart: $dateIssueStart, issuedEnd: $dateIssueEnd", ErrorCode.INVALID_COUPON_ISSUE_DATE)
         }
     }
